@@ -5,46 +5,99 @@
 SCRIPT 1:
 ---------
 */
-/* {3dsector,cut1,cut2,cut3,nailDist} */
-int skinPeeler[3][5] = {{3,4,5,6,128},{11,8,9,10,128},{18,13,14,15,128}};
 
+/* {3dsectorID, nailDist, sndthingID(?), hitCounter, hitCountLimit, lookupIndex} 
+sndthingID is currently the player. This may change
+*/
+int nailHammer[3][6] = {
+	{3,		144,	1,	0,	3,	0},	//432, EAST, Secret from 2ns LOWER? (288 down)
+	{11,	96,		2,	0,	5,	1},	//480, WEST, ENTRY HERE
+	{18,	384,	3,	0,	1,	2}	//384, SOUTH
+};
+/* tags of sectors to drop as each hammer occurs, for each nail */
+/* {dist, flat, tag1,tag2,...tagn...} 
+ - tagn = sector to drop for current index (keyed by tracker, above)
+ Each 'hit' will increment counter indexed by nailHammer[5] Due to limitations of ACS multidimensional arrays, I need to declare up front, but
+ crucially, I cannot have nested arrays of different lengths. Therefore, I pad with  -1 if the nested array (indexed by nailHammer[5]) refers to the cuts caused by byhammer counts
+ less than the maximum declared in one of the nailHammer[n][3] entries (currently 5).  The FIRST entry is distance to fall (*8) and the second entry is flat to change to */
+int skinPeeler[3][7] = {
+	{3,		"BLOOD1",	4,	5,	6,	-1,	-1},
+	{3,		"BLOOD1",	30,	31,	32,	33,	34},
+	{3,		"BLOOD1",	8,	-1,	-1,	-1,	-1}
+};
+
+/* control sectors initially of brightness 112. This script sets to max as the cut drips into the blood */
+int cutBrightnessMapper[3][5] = {
+	{100,101,102,-1,-1},
+	{104,105,106,107,108},
+	{103,-1,-1,-1,-1}
+};
+
+/* TIDs for spawn points of blood splashes. There will be more as the cut gets wider, so I
+need to ensure the following:
+ - first hammer, spawn at only first TID
+ - second hit, spawn at first AND second
+ - third hit, spawn at first, second and third
+ - and so on...
+
+*/
+int bloodSplashMapper[3][5] = {
+	{10,11,12,	-1,	-1},
+	{18,17,16,15,14},
+	{13,	-1,	-1,	-1,	-1}
+};
+
+/* to stop the BoH falling through the 3D floor */
+script 100 ENTER{
+	Floor_LowerInstant(2,0,64);
+	Floor_LowerInstant(12,0,64);
+	Floor_LowerInstant(23,0,64);
+	Floor_LowerInstant(19,0,33);
+}
+
+/* nail ID comes from linedef parameter */
 script 1 (int nailId){
-	log(s:"nail in...",i:skinPeeler[nailId][0],i:skinPeeler[nailId][1],i:skinPeeler[nailId][2],i:skinPeeler[nailId][3]);	
-	// tag, speed, height
-	//the nail
-	Floor_LowerByValue(skinPeeler[nailId][0], 8, skinPeeler[nailId][4]);
-	Ceiling_LowerByValue(skinPeeler[nailId][0],8,skinPeeler[nailId][4]);
-	
-	//the skin
-	int counter = 0;
-	while(counter < 200){
-		counter = counter+1;
-		if(counter == 35){
-			Floor_LowerInstant(skinPeeler[nailId][1],0,16);
+	/* check we have not reached the hit limit for nailId: */
+	if(nailHammer[nailId][3] < nailHammer[nailId][4]){
+		
+		/* drop the 3D floors defining the nail: */
+		Floor_LowerByValue(nailHammer[nailId][0], 256, nailHammer[nailId][1]);
+		Ceiling_LowerByValue(nailHammer[nailId][0],256,nailHammer[nailId][1]);
+		PlaySound(0, "HIT_SLDG");
+
+		/* because the hammer is now fast, the delay won't work. I therefore need to keep track of which hit I am on, rather than how long the pause should be.
+		So I can use the counter (nailId][3]) to as an index for the sector to lower (skinPeeler: Floor_LowerInstant (tag, arg1, height), (height * 8)*/
+		int lookupIndex= nailHammer[nailId][5];
+		
+		/* I therefore need to reference this entry for skinpeeler: */
+		int currentLookupEntry = nailHammer[nailId][3];
+		log(i:currentLookupEntry);
+		int currentCutBrightnessTag = cutBrightnessMapper[nailId][currentLookupEntry];
+		log(i:currentCutBrightnessTag);
+		
+		int currentTagToDropIndex = currentLookupEntry + 2;		//this becomes the index for skinpeeler. As we have two entries before it, ADD TWO!!!!
+		int currentTagToDrop = skinPeeler[lookupIndex][currentTagToDropIndex];
+		
+		int currentDistToDrop = skinPeeler[lookupIndex][0];
+		str currentFloorFlat = skinPeeler[lookupIndex][1];
+		
+		Floor_LowerInstant(currentTagToDrop, 0, currentDistToDrop);
+		ChangeFloor(currentTagToDrop,currentFloorFlat);
+		Light_ChangeToValue(currentCutBrightnessTag,255);
+		
+		/* I need to iterate to generate all splashes. This routine needs to trigger more splashes as the cut widens... */
+		int splashCounter = 0;
+		for(int a=0;a<currentLookupEntry+1;a++){
+			/* determine which TID(s) to activate. We count back to get all TIDs in the array */
+			log(s:"splashing...",i:lookupIndex,i:bloodSplashMapper[lookupIndex][currentLookupEntry-splashCounter]);
+			log(s:"counter: ",i:splashCounter);
+			/* also need to push the thing down, as z-index is eset to starting floor level */
+			SpawnSpotForced("BloodSplashBase",bloodSplashMapper[lookupIndex][currentLookupEntry-splashCounter],1,0);
+			SpawnSpotForced("BloodSplash",bloodSplashMapper[lookupIndex][currentLookupEntry-splashCounter],1,0);
+			splashCounter++;
 		}
-		if(counter == 70){
-			Floor_LowerInstant(skinPeeler[nailId][2],0,16);
-		}
-		if(counter == 105){
-			Floor_LowerInstant(skinPeeler[nailId][3],0,16);
-		}
-		Delay(1);
+		
+		/* increment hit counte for current nail */
+		nailHammer[nailId][3] += 1;
 	}
-	
-	
-	//Delay(100);
-	
-	
-	
-	// tag, speed, height
-	//Floor_LowerByValue(3, 8, 64);
-	//print(i:4);
-	/* open first monster trap */
-	//Ceiling_LowerByValue(3,8,64);
-	//print(i:5);
-	//Delay(170);
-	//Floor_LowerInstant(5,0,128);
-	//Delay(200);
-	//Floor_LowerInstant(6,0,128);
-	//print(i:6);
 }
