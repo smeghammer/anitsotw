@@ -29,11 +29,11 @@ tag tracker:
 21
 22
 23
-24
+24 glowy plat rings *2
 25 (outside corpse rail)
 
 26 - switch walllight
-
+27 glowy plat rings *1
 
 30
 31
