@@ -32,6 +32,9 @@ tag tracker:
 24
 25 (outside corpse rail)
 
+26 - switch walllight
+
+
 30
 31
 32
@@ -51,6 +54,19 @@ tag tracker:
 255
 
 
+TIDs:
+-----
+3	head skewer, S (why?)
+10	E nail mapspot
+11	E nail mapspot
+12	E nail mapspot
+13	S nail mapspot
+14	W nail mapspot
+15	W nail mapspot
+16	W nail mapspot
+17	W nail mapspot
+18	W nail mapspot
+
 need to set transferfloorlight with the script!
 
 blood splashe things? Check R667...
@@ -67,3 +83,13 @@ nails: E,W,S
 platform secret puzzle:
 W redbrick wall is stairs up to SECOND level of nail descent. This crosses oer to opposide wall - this will allow getitng on and crossing to E nail, wih goodies.
 
+Skullkeys on platforms!
+have fireblu switch to open bars on entry telespot
+transfer walllight to switchs
+final platform is W nail
+final platform needs both keys (change to executewithlock)
+control sector to raise SLOPING CONTROL SECTOR? To reveal a tunnel#
+ - this will need portals
+
+Also, need to script the key message as per
+https://zdoom.org/wiki/ACS_LockedExecute

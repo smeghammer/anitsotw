@@ -9,10 +9,11 @@ SCRIPT 1:
 /* {3dsectorID, nailDist, sndthingID(?), hitCounter, hitCountLimit, lookupIndex} 
 sndthingID is currently the player. This may change
 */
-int nailHammer[3][6] = {
-	{3,		144,	1,	0,	3,	0},	//432, EAST, Secret from 2ns LOWER? (288 down)
+int nailHammer[4][6] = {
+	{3,		156,	1,	0,	3,	0},	//432, EAST, Secret from 2ns LOWER? (288 down)
 	{11,	96,		2,	0,	5,	1},	//480, WEST, ENTRY HERE
-	{18,	384,	3,	0,	1,	2}	//384, SOUTH
+	{18,	416,	3,	0,	1,	2},	//384, SOUTH
+	{21,	232,	4,	0,	1,	3}	//384, CENTRE
 };
 /* tags of sectors to drop as each hammer occurs, for each nail */
 /* {dist, flat, tag1,tag2,...tagn...} 
@@ -20,17 +21,19 @@ int nailHammer[3][6] = {
  Each 'hit' will increment counter indexed by nailHammer[5] Due to limitations of ACS multidimensional arrays, I need to declare up front, but
  crucially, I cannot have nested arrays of different lengths. Therefore, I pad with  -1 if the nested array (indexed by nailHammer[5]) refers to the cuts caused by byhammer counts
  less than the maximum declared in one of the nailHammer[n][3] entries (currently 5).  The FIRST entry is distance to fall (*8) and the second entry is flat to change to */
-int skinPeeler[3][7] = {
+int skinPeeler[4][7] = {
 	{3,		"BLOOD1",	4,	5,	6,	-1,	-1},
 	{3,		"BLOOD1",	30,	31,	32,	33,	34},
-	{3,		"BLOOD1",	8,	-1,	-1,	-1,	-1}
+	{3,		"BLOOD1",	8,	-1,	-1,	-1,	-1},
+	{-1,		"-",	-1,	-1,	-1,	-1,	-1}
 };
 
 /* control sectors initially of brightness 112. This script sets to max as the cut drips into the blood */
-int cutBrightnessMapper[3][5] = {
+int cutBrightnessMapper[4][5] = {
 	{100,101,102,-1,-1},
 	{104,105,106,107,108},
-	{103,-1,-1,-1,-1}
+	{103,-1,-1,-1,-1},
+	{-1,-1,-1,-1,-1}
 };
 
 /* TIDs for spawn points of blood splashes. There will be more as the cut gets wider, so I
@@ -41,11 +44,14 @@ need to ensure the following:
  - and so on...
 
 */
-int bloodSplashMapper[3][5] = {
+int bloodSplashMapper[4][5] = {
 	{10,11,12,	-1,	-1},
 	{18,17,16,15,14},
-	{13,	-1,	-1,	-1,	-1}
+	{13,	-1,	-1,	-1,	-1},
+	{35,	-1,	-1,	-1,	-1}
 };
+/* TIDs of things from which to play the nail sounds, rathe than the player. */
+int nailSoundTIDMapper[3] = {1,2,3};
 
 /* to stop the BoH falling through the 3D floor */
 script 100 ENTER{
@@ -57,13 +63,25 @@ script 100 ENTER{
 
 /* nail ID comes from linedef parameter */
 script 1 (int nailId){
+	print(i:nailId);
+	int unlocked = 1;
+	if(nailId == 1)
+	{
+		if (!(CheckInventory("BlueSkull") && CheckInventory("RedSkull")))
+		{
+			print(s:"You need red and blue skull keys");
+			unlocked = 0;
+		}
+		// do logic as per https://zdoom.org/wiki/ACS_LockedExecute
+	}
 	/* check we have not reached the hit limit for nailId: */
-	if(nailHammer[nailId][3] < nailHammer[nailId][4]){
+	if(nailHammer[nailId][3] < nailHammer[nailId][4] && unlocked){
 		
 		/* drop the 3D floors defining the nail: */
 		Floor_LowerByValue(nailHammer[nailId][0], 256, nailHammer[nailId][1]);
 		Ceiling_LowerByValue(nailHammer[nailId][0],256,nailHammer[nailId][1]);
-		PlaySound(0, "HIT_SLDG");
+		/* play sound at appropriate head kebab */
+		PlaySound(nailSoundTIDMapper[nailHammer[nailId][5]], "HIT_SLDG");
 
 		/* because the hammer is now fast, the delay won't work. I therefore need to keep track of which hit I am on, rather than how long the pause should be.
 		So I can use the counter (nailId][3]) to as an index for the sector to lower (skinPeeler: Floor_LowerInstant (tag, arg1, height), (height * 8)*/
