@@ -19,6 +19,8 @@ tag tracker:
 6
 7
 8
+9	entry platform nails
+10	entry platform nails
 11
 12
 16
@@ -29,17 +31,19 @@ tag tracker:
 21
 22
 23
-24 glowy plat rings *2
-25 (outside corpse rail)
-
-26 - switch walllight
-27 glowy plat rings *1
-
+24 	glowy plat rings *2
+25 	(outside corpse rail)
+26 	- switch walllight
+27 	glowy plat rings *1
+28	entry platform nails
+29	entry platform nails
 30
 31
 32
 33
 34
+35	entry platform nails
+
 
 40
 41
@@ -67,6 +71,8 @@ TIDs:
 17	W nail mapspot
 18	W nail mapspot
 
+20 entry nail splashes
+
 need to set transferfloorlight with the script!
 
 blood splashe things? Check R667...
@@ -93,3 +99,6 @@ control sector to raise SLOPING CONTROL SECTOR? To reveal a tunnel#
 
 Also, need to script the key message as per
 https://zdoom.org/wiki/ACS_LockedExecute
+
+TODO:
+	entry platform nails
