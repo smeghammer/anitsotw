@@ -10,4 +10,5 @@ map MAP15 "Hammerfall"
 	next="MAP16"
 	sky1 = "DRTYSKY9"
 	music = "D_IN_CIT"
+	NoJump
 }

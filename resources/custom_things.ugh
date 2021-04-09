@@ -5,7 +5,14 @@
 
 
 #Custom
-thinggroup c 66C "Custom Decoration"
+thinggroup f 66C "Former Humans"
+thinggroup c 66C "Corpses"
+thinggroup i 66C "Flesh"
+thinggroup t 66C "Cybernetic Demons"
+thinggroup v 66C "Botanical"
+thinggroup z 66C "Animals"
+thinggroup r 66C "Human Tech"
+thinggroup x 66C "Demons"
 
 #
 #	Definition of things
@@ -23,16 +30,9 @@ thinggroup c 66C "Custom Decoration"
 #
 #
 # DOOM/DOOM2:
-
-# thing 12328 c - 20 ZBAMF1   "Beam Zombie"
-# thing 15000 c - 20 CIMPF1   "Cyber Imp"
-# thing 30124 c - 20 DPOSE1   "Double Chaingunner"
-# thing 15056 c - 16 EXTRE1   "Exterminator"
-# thing 31497 c - 20 FLMZE1   "Flamer Zombie"
-# thing 3125 c - 60 RSPIB1E1   "Rail Arachnotron"
-# thing 9656 c - 8 RATAC2C8   "Small Rat"
-# thing 15001 c - 40 UACBJ8   "UAC Bot"
-# thing 31004 c - 40 FLBRNE1   "Flamer Baron"
+thing 30124 f - 20 DPOSE1   "Double Chaingunner"
+thing 15056 f - 16 EXTRE1   "Exterminator"
+thing 31497 f - 20 FLMZE1   "Flamer Zombie"
 
 thing 15200 c - 8 CPSIA0   "Impaled Corpse #1"
 thing 15201 c - 8 CPSIB0   "Impaled Corpse #2"
@@ -45,11 +45,24 @@ thing 15207 c - 8 UPSCC0   "Hanging Corpse #3"
 thing 15208 c - 8 UPSCD0   "Hanging Corpse #4"
 thing 15209 c - 8 UPSCE0   "Hanging Corpse #5"
 
+thing 16000 i - 16 MELFA0   "Flesh Pillar Pink"
+thing 16001 i - 16 MELFB0   "Flesh Pillar Tan"
+thing 16002 i - 16 MELFC0   "Flesh Dangling Pink"
+thing 16003 i - 16 MELFD0   "Flesh Dangling Tan"
 
+thing 12328 t - 20 ZBAMF1   "Beam Zombie"
+thing 15000 t - 20 CIMPF1   "Cyber Imp"
+thing 3125 t - 60 RSPIB1E1   "Rail Arachnotron"
 
-# HERETIC
-# thing 15010 c - 40 PLANA0   "Garden tree 1"
-# thing 15011 c - 40 PLANB0   "Garden tree 2"
-# thing 15012 c - 40 PLANC0   "Garden bush 1"
-# thing 15013 c - 40 PLAND0   "Garden bush 2"
-# thing 15014 c - 40 PLANE0   "Garden bush 3"
+thing 15010 v - 40 PLANA0   "Garden tree 1"
+thing 15011 v - 40 PLANB0   "Garden tree 2"
+thing 15012 v - 40 PLANC0   "Garden bush 1"
+thing 15013 v - 40 PLAND0   "Garden bush 2"
+thing 15014 v - 40 PLANE0   "Garden bush 3"
+
+thing 9656 z - 8 RATAC2C8   "Small Rat"
+
+thing 15001 r - 40 UACBJ8   "UAC Bot"
+
+thing 31004 x - 40 FLBRNE1   "Flamer Baron"
+

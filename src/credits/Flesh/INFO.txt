@@ -1,0 +1,11 @@
+Name: Flesh Pillars
+Connection: None
+Palette: Doom
+Summon: FleshPillarPink
+	FleshPillarTan
+	FleshDanglingPink
+	FleshDanglingTan
+Ambient Sound: No
+De-/Activatable: No
+Destroyable: No
+Special Effects: No

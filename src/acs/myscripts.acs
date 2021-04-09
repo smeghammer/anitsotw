@@ -20,7 +20,7 @@ int nailHammer[5][6] = {
 /* {dist, flat, tag1,tag2,...tagn...} 
  - tagn = sector to drop for current index (keyed by tracker, above)
  Each 'hit' will increment counter indexed by nailHammer[5] Due to limitations of ACS multidimensional arrays, I need to declare up front, but
- crucially, I cannot have nested arrays of different lengths. Therefore, I pad with  -1 if the nested array (indexed by nailHammer[5]) refers to the cuts caused by byhammer counts
+ crucially, I cannot have nested arrays of different lengths. Therefore, I pad with  -1 if the nested array (indexed by nailHammer[5]) refers to the cuts caused by by hammer counts
  less than the maximum declared in one of the nailHammer[n][3] entries (currently 5).  The FIRST entry is distance to fall (*8) and the second entry is flat to change to */
 int skinPeeler[5][7] = {
 	{3,		"BLOOD1",	4,	5,	6,	-1,	-1},
@@ -62,7 +62,9 @@ script 100 ENTER{
 	Floor_LowerInstant(2,0,64);
 	Floor_LowerInstant(12,0,64);
 	Floor_LowerInstant(23,0,64);
-	Floor_LowerInstant(19,0,33);
+	Floor_LowerInstant(19,0,33);	//also, the cente of the sub-basement central nail underside
+	
+	Line_SetBlocking(1,32,0);
 }
 
 /* nail ID comes from linedef parameter */
@@ -71,9 +73,10 @@ script 1 (int nailId){
 	int unlocked = 1;
 	if(nailId == 1)
 	{
-		if (!(CheckInventory("BlueSkull") && CheckInventory("RedSkull")))
+		//TODO: Change this bak as something fucked up...
+		if (!(CheckInventory("BlueSkull") && CheckInventory("YellowSkull")))
 		{
-			print(s:"You need red and blue skull keys");
+			print(s:"You need blue and yellow skull keys");
 			unlocked = 0;
 		}
 		// do logic as per https://zdoom.org/wiki/ACS_LockedExecute
@@ -123,3 +126,32 @@ script 1 (int nailId){
 		nailHammer[nailId][3] += 1;
 	}
 }
+
+/*
+toggle line blocking for pit fence above the tunnel
+*/
+script 2(int flag){
+	log(s:"setting line block flag...");
+	if(flag){
+		/* unblock */
+		log(s:"unblock...");
+		Line_SetBlocking(1,0,32);
+	}
+	else{
+		log(s:"blocking...");
+		Line_SetBlocking(1,32,0);
+	}
+	
+}
+/*
+Open chaingun platform and raise light level
+*/
+script 3(void){
+	Ceiling_RaiseByValue(38,12,24);
+	Light_ChangeToValue(38,255);
+}
+
+
+
+
+

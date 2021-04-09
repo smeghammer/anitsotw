@@ -43,12 +43,15 @@ tag tracker:
 33
 34
 35	entry platform nails
-
-
+36	3d floor at floor level
+37	hallway blood
+38	chaingun plat
 40
 41
 42
-
+43	sub-basement bars
+44	sub-basement bars/glowy blood floor
+45
 
 100
 101
@@ -61,6 +64,9 @@ tag tracker:
 TIDs:
 -----
 3	head skewer, S (why?)
+
+4	Tele dest at start
+
 10	E nail mapspot
 11	E nail mapspot
 12	E nail mapspot
@@ -102,3 +108,14 @@ https://zdoom.org/wiki/ACS_LockedExecute
 
 TODO:
 	entry platform nails
+	
+	
+	do .UGH file usage in editing !!
+	
+	
+	
+Basement 1:
+-----------
+
+
+	

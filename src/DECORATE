@@ -1,2 +1,4 @@
 #include "Actors/ImpaledCorpses/DECORATE"
 #include "Actors/UpsideDownCorpses/DECORATE"
+#include "Actors/Flesh/DECORATE"
+#include "Actors/FlamerBaron/DECORATE"
