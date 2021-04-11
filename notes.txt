@@ -52,6 +52,10 @@ tag tracker:
 43	sub-basement bars
 44	sub-basement bars/glowy blood floor
 45
+46	sub-basement exit door
+47	barrires that need mancubus killing to open
+
+50	descent ceilig lights
 
 100
 101
@@ -78,6 +82,8 @@ TIDs:
 18	W nail mapspot
 
 20 entry nail splashes
+
+30	Mancubi at exit
 
 need to set transferfloorlight with the script!
 
