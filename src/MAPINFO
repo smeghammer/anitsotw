@@ -8,7 +8,7 @@ map MAP15 "Hammerfall"
 {
 	levelnum=15
 	next="MAP16"
-	sky1 = "DRTYSKY9"
+	sky1 = "OSKY20",20
 	music = "D_IN_CIT"
 	NoJump
 }
