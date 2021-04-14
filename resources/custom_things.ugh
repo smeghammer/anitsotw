@@ -13,6 +13,7 @@ thinggroup v 66C "Botanical"
 thinggroup z 66C "Animals"
 thinggroup r 66C "Human Tech"
 thinggroup x 66C "Demons"
+thinggroup y 66C "Environment"
 
 #
 #	Definition of things
@@ -65,4 +66,8 @@ thing 9656 z - 8 RATAC2C8   "Small Rat"
 thing 15001 r - 40 UACBJ8   "UAC Bot"
 
 thing 31004 x - 40 FLBRNE1   "Flamer Baron"
+
+thing 10001 y - 40 FLMSML   "Fire (small)"
+thing 10002 y - 60 FLMMED   "Fire (medium)"
+thing 10003 y - 80 FLMLRG   "Fire (large)"
 

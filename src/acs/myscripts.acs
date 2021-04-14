@@ -59,6 +59,9 @@ int nailSoundTIDMapper[5] = {1,2,3,4,5};
 
 int underworldDoorLock[2] = {0,0};
 
+/* track lowering of dest tele platform */
+int finalTeleIsLowered = 0;
+
 /* to stop the BoH falling through the 3D floor */
 script 100 ENTER{
 	Floor_LowerInstant(2,0,64);
@@ -164,7 +167,7 @@ script 4 (int flag){
 }
 
 /*
-track mancubi deaths:
+track exit guard deaths:
 */
 script 5(void){
 	while(ThingCount(T_NONE,30)> 0){
@@ -173,6 +176,14 @@ script 5(void){
 	floor_LowerByValue(48,8,56);
 }
 
+/* lower platform under last teleport */
+script 6(void){
+	if(!finalTeleIsLowered){
+		floor_LowerInstant(74,0,91);
+		finalTeleIsLowered = 1;
+		ChangeFloor(74,"F_SKY1");
+	}
+}
 
 
 
