@@ -57,46 +57,11 @@ tag tracker:
 
 50	descent ceiling lights
 
+Removed floating islands:
 
-floating rocks:
- - upper and lower:
- - upper=redrock
- - lower=lava
- - lower numb always central
-
-N:
-51
-52
-53
-69	//'sea'
-75	//control sector
-
-NE:
-54
-55
-56
-67	//'sea'
-
-E:
-57
-58
-59
-60
-71	//'sea'
-S:
-61
-62
-63
-64
-72	//'sea'
-W:
-65
-66
-67
-68
-73	//'sea'
- - lower numb always central
-74	//tele dest
+51	//MC #1
+52	//MC #2
+53	//MC #3
 
 100
 101
@@ -113,6 +78,8 @@ TIDs:
 4	Tele dest at start
 
 5	//tele dest in final room
+
+6	tele dest(s) in main arena
 
 10	E nail mapspot
 11	E nail mapspot
@@ -165,6 +132,28 @@ TODO:
 	
 Basement 1:
 -----------
+
+
+tele from secret room back to start - check lines!
+
+spawn monsters on dropping red key nail
+
+
+
+
+add second tele dest in arena
+less hell knights?
+add second tele depart point
+add blue/yellow key progression logic to later redbrick tunnels
+add final exit area from last tele?
+
+
+ALSO:
+othe rlevel - very bright squares and linedef tgriggers for dropping etc. Make it a slughter type arena thing?
+
+
+
+
 
 
 	

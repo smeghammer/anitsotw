@@ -62,6 +62,9 @@ int underworldDoorLock[2] = {0,0};
 /* track lowering of dest tele platform */
 int finalTeleIsLowered = 0;
 
+int blueNeeded = 1;
+int yellowNeeded = 1;
+
 /* to stop the BoH falling through the 3D floor */
 script 100 ENTER{
 	Floor_LowerInstant(2,0,64);
@@ -70,10 +73,25 @@ script 100 ENTER{
 	Floor_LowerInstant(19,0,33);	//also, the cente of the sub-basement central nail underside
 	
 	Line_SetBlocking(1,32,0);
+	
+	
+	/* periodically check inventory for blue and yellow skull keys */
+	while(TRUE){
+		Delay(35);
+		if(CheckInventory("BlueSkull") && blueNeeded){
+			blueNeeded = 0;
+			floor_lowerinstant(51,0, 15);
+		}
+		if(CheckInventory("YellowSkull") && yellowNeeded){
+			yellowNeeded = 0;
+			floor_lowerinstant(52,0, 15);
+		}
+		
+	}
 }
 
-/* nail ID comes from linedef parameter */
-script 1 (int nailId){
+/* nail ID, releaseRedEvilness come from linedef parameters */
+script 1 (int nailId,int releaseRedEvilness){
 	print(i:nailId);
 	int unlocked = 1;
 	if(nailId == 1)
@@ -86,6 +104,12 @@ script 1 (int nailId){
 		}
 		// do logic as per https://zdoom.org/wiki/ACS_LockedExecute
 	}
+	
+	/* open monster closet to protect the red key! */
+	if(releaseRedEvilness){
+		floor_lowerinstant(53,0, 15);
+	}
+	
 	/* check we have not reached the hit limit for nailId: */
 	if(nailHammer[nailId][3] < nailHammer[nailId][4] && unlocked){
 		
