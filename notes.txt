@@ -57,11 +57,14 @@ tag tracker:
 
 50	descent ceiling lights
 
-Removed floating islands:
+Removed floating islands
 
 51	//MC #1
 52	//MC #2
 53	//MC #3
+54	//re-entry ring
+55	//bars to lower for the last area
+56
 
 100
 101
@@ -80,7 +83,8 @@ TIDs:
 5	//tele dest in final room
 
 6	tele dest(s) in main arena
-
+7	exit
+8
 10	E nail mapspot
 11	E nail mapspot
 12	E nail mapspot

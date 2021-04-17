@@ -74,7 +74,6 @@ script 100 ENTER{
 	
 	Line_SetBlocking(1,32,0);
 	
-	
 	/* periodically check inventory for blue and yellow skull keys */
 	while(TRUE){
 		Delay(35);
@@ -92,7 +91,6 @@ script 100 ENTER{
 
 /* nail ID, releaseRedEvilness come from linedef parameters */
 script 1 (int nailId,int releaseRedEvilness){
-	print(i:nailId);
 	int unlocked = 1;
 	if(nailId == 1)
 	{
@@ -125,9 +123,7 @@ script 1 (int nailId,int releaseRedEvilness){
 		
 		/* I therefore need to reference this entry for skinpeeler: */
 		int currentLookupEntry = nailHammer[nailId][3];
-		log(i:currentLookupEntry);
 		int currentCutBrightnessTag = cutBrightnessMapper[nailId][currentLookupEntry];
-		log(i:currentCutBrightnessTag);
 		
 		int currentTagToDropIndex = currentLookupEntry + 2;		//this becomes the index for skinpeeler. As we have two entries before it, ADD TWO!!!!
 		int currentTagToDrop = skinPeeler[lookupIndex][currentTagToDropIndex];
@@ -143,8 +139,6 @@ script 1 (int nailId,int releaseRedEvilness){
 		int splashCounter = 0;
 		for(int a=0;a<currentLookupEntry+1;a++){
 			/* determine which TID(s) to activate. We count back to get all TIDs in the array */
-			log(s:"splashing...",i:lookupIndex,i:bloodSplashMapper[lookupIndex][currentLookupEntry-splashCounter]);
-			log(s:"counter: ",i:splashCounter);
 			/* also need to push the thing down, as z-index is eset to starting floor level */
 			SpawnSpotForced("BloodSplashBase",bloodSplashMapper[lookupIndex][currentLookupEntry-splashCounter],1,0);
 			SpawnSpotForced("BloodSplash",bloodSplashMapper[lookupIndex][currentLookupEntry-splashCounter],1,0);
@@ -160,22 +154,19 @@ script 1 (int nailId,int releaseRedEvilness){
 toggle line blocking for pit fence above the tunnel
 */
 script 2(int flag){
-	log(s:"setting line block flag...");
 	if(flag){
 		/* unblock */
-		log(s:"unblock...");
 		Line_SetBlocking(1,0,32);
 	}
 	else{
-		log(s:"blocking...");
 		Line_SetBlocking(1,32,0);
 	}
-	
 }
 /*
 Open chaingun platform and raise light level
 */
 script 3(void){
+	print(s:"A weapon cache is opened...");
 	Ceiling_RaiseByValue(38,12,24);
 	Light_ChangeToValue(38,255);
 }
@@ -209,6 +200,19 @@ script 6(void){
 	}
 }
 
+
+/*
+dop bars to last area:
+*/
+script 7(void){
+	if (!(CheckInventory("BlueSkull") && CheckInventory("YellowSkull")))
+	{
+		print(s:"You need blue and yellow skull keys");
+	}
+	else{
+		floor_LowerByValue(55,8,56);
+	}
+}
 
 
 
