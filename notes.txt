@@ -158,7 +158,8 @@ othe rlevel - very bright squares and linedef tgriggers for dropping etc. Make i
 
 18/04/21:
 ---------
-Fixed textures and line blocking!
+ - Fixed textures and line blocking!
+ - adjusted fence
 
 
 
