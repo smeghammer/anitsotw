@@ -156,7 +156,9 @@ ALSO:
 othe rlevel - very bright squares and linedef tgriggers for dropping etc. Make it a slughter type arena thing?
 
 
-
+18/04/21:
+---------
+Fixed textures and line blocking!
 
 
 
