@@ -163,4 +163,16 @@ othe rlevel - very bright squares and linedef tgriggers for dropping etc. Make i
 
 
 
+18/04/21:
+---------
+detect map num and switch ENTER script:
+https://zdoom.org/wiki/Scope
+https://forum.zdoom.org/viewtopic.php?f=3&t=46972
+https://zdoom.org/wiki/StrCmp
+https://zdoom.org/wiki/GetLevelInfo
+https://zdoom.org/wiki/MAPINFO/Map_definition#LevelNum
+
+
+
+
 	

@@ -12,3 +12,12 @@ map MAP15 "Hammerfall"
 	music = "D_IN_CIT"
 	NoJump
 }
+
+map MAP16 "Echoes of Other Lives"
+{
+	levelnum=16
+	next="MAP17"
+	sky1 = "OSKY20",20
+	music = "D_IN_CIT"
+	NoJump
+}
