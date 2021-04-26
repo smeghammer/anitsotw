@@ -67,7 +67,6 @@ int yellowNeeded = 1;
 
 /* to stop the BoH falling through the 3D floor */
 script 100 ENTER{
-	log(s:"map 15 start");
 	Floor_LowerInstant(2,0,64);
 	Floor_LowerInstant(12,0,64);
 	Floor_LowerInstant(23,0,64);
